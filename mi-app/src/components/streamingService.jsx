@@ -1,0 +1,34 @@
+
+export default function StreamingService({ register, errors }) {
+
+    return (
+        <>
+            <label htmlFor="streamingService">
+                Plataforma de streaming
+            </label>
+
+            <select
+                id="streamingService"
+                {...register("streamingService", {
+                    required: "Selecciona una plataforma"
+                })}
+            >
+                <option value="">Seleccionar...</option>
+                <option value="netflix">Netflix</option>
+                <option value="primeVideo">Prime Video</option>
+                <option value="disneyPlus">Disney+</option>
+                <option value="hbo">HBO</option>
+                <option value="filmin">Filmin</option>
+                <option value="movistarPlus">Movistar+</option>
+                <option value="orangeTV">Orange TV</option>
+
+            </select>
+
+            {errors.streamingService && (
+                <span role="alert">
+                    {errors.streamingService.message}
+                </span>
+            )}
+        </>
+    );
+}

@@ -1,4 +1,3 @@
-
 export default function Description({ register, errors }) {
 
     return (
@@ -7,13 +6,13 @@ export default function Description({ register, errors }) {
 
             <textarea
                 id="description"
-                {...register("description", {
-                    required: "La descripción es obligatoria"
-                })}
+                {...register("description")}
             />
 
             {errors.description && (
-                <span role="alert">{errors.description.message}</span>
+                <span role="alert">
+                    {errors.description.message}
+                </span>
             )}
         </>
     );

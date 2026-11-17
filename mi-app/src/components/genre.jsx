@@ -6,9 +6,7 @@ export default function Genre({ register, errors }) {
 
             <select
                 id="genre"
-                {...register("genre", {
-                    required: "Selecciona un género"
-                })}
+                {...register("genre")}
             >
                 <option value="">Seleccionar...</option>
                 <option value="accion">Acción</option>
@@ -62,7 +60,9 @@ export default function Genre({ register, errors }) {
             </select>
 
             {errors.genre && (
-                <span role="alert">{errors.genre.message}</span>
+                <span role="alert">
+                    {errors.genre.message}
+                </span>
             )}
         </>
     );

@@ -1,4 +1,3 @@
-
 export default function Grade({ register, errors }) {
 
     return (
@@ -10,21 +9,14 @@ export default function Grade({ register, errors }) {
                 type="number"
                 step="0.1"
                 {...register("grade", {
-                    required: "La puntuación es obligatoria",
-                    valueAsNumber: true,
-                    min: {
-                        value: 0,
-                        message: "La puntuación mínima es 0"
-                    },
-                    max: {
-                        value: 10,
-                        message: "La puntuación máxima es 10"
-                    }
+                    valueAsNumber: true
                 })}
             />
 
             {errors.grade && (
-                <span role="alert">{errors.grade.message}</span>
+                <span role="alert">
+                    {errors.grade.message}
+                </span>
             )}
         </>
     );

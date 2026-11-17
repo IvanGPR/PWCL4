@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { esquemaPelicula } from "../esquemaRegistro/esquemaPelicula";
 
 import Title from "./title";
 import Genre from "./genre";
@@ -16,6 +18,8 @@ export default function FormularioPelicula() {
         handleSubmit,
         formState: { errors, isSubmitting }
     } = useForm({
+        resolver: zodResolver(esquemaPelicula),
+
         defaultValues: {
             title: "",
             genre: "",

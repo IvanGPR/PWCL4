@@ -7,13 +7,13 @@ export default function Title({ register, errors }) {
             <input
                 id="title"
                 type="text"
-                {...register("title", {
-                    required: "El título es obligatorio"
-                })}
+                {...register("title")}
             />
 
             {errors.title && (
-                <span role="alert">{errors.title.message}</span>
+                <span role="alert">
+                    {errors.title.message}
+                </span>
             )}
         </>
     );

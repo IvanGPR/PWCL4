@@ -1,21 +1,48 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { esquemaPelicula } from "../esquemaRegistro/esquemaPelicula";
+import { plataformas } from "../constants/plataformas";
 
 import Title from "./title";
 import Genre from "./genre";
 import Duration from "./duration";
 import ReleaseDate from "./releaseDate";
 import StreamingService from "./streamingService";
-import Price from "./price";
 import Description from "./description";
 import Grade from "./grade";
+
+
+// Generar los valores iniciales de todas las plataformas
+const streamingDefaults = {};
+
+plataformas.forEach((plataforma) => {
+
+    if (plataforma.id === "comprada") {
+
+        streamingDefaults[plataforma.id] = {
+            disponible: false,
+            precio: ""
+        };
+
+    } else {
+
+        streamingDefaults[plataforma.id] = {
+            disponible: false,
+            modalidad: "",
+            precio: ""
+        };
+
+    }
+
+});
+
 
 export default function FormularioPelicula() {
 
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors, isSubmitting }
     } = useForm({
         resolver: zodResolver(esquemaPelicula),
@@ -25,8 +52,7 @@ export default function FormularioPelicula() {
             genre: "",
             duration: "",
             releaseDate: "",
-            streamingService: "",
-            price: "",
+            streamingService: streamingDefaults,
             description: "",
             grade: ""
         }
@@ -41,7 +67,10 @@ export default function FormularioPelicula() {
 
             <h1>Crear película</h1>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form 
+                onSubmit={handleSubmit(onSubmit)} 
+                noValidate
+            >
 
                 <Title register={register} errors={errors} />
 
@@ -51,9 +80,7 @@ export default function FormularioPelicula() {
 
                 <ReleaseDate register={register} errors={errors} />
 
-                <StreamingService register={register} errors={errors} />
-
-                <Price register={register} errors={errors} />
+                <StreamingService register={register} errors={errors} watch={watch}/>
 
                 <Description register={register} errors={errors} />
 

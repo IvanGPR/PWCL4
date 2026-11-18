@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {useMutation,useQueryClient} from "@tanstack/react-query";
 import { esquemaPelicula } from "../esquemaRegistro/esquemaPelicula";
 import { plataformas } from "../constants/plataformas";
+import { crearPelicula } from "../Api";
 
 import Title from "./title";
 import Genre from "./genre";
@@ -43,7 +45,8 @@ export default function FormularioPelicula() {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting }
+        reset,
+        formState: {errors}
     } = useForm({
         resolver: zodResolver(esquemaPelicula),
 
@@ -58,8 +61,38 @@ export default function FormularioPelicula() {
         }
     });
 
+    const queryClient = useQueryClient();
+    const mutacion = useMutation({
+
+        mutationFn: crearPelicula,
+        onSuccess: () => {
+            reset();
+            queryClient.invalidateQueries({
+                queryKey: ["peliculas"]
+            });
+
+        }
+
+    });
+
     function onSubmit(data) {
-        console.log(data);
+
+        // Limpiar datos de plataformas que ya no estan seleccionadas
+        plataformas.forEach((plataforma) => {
+            const datos = data.streamingService[plataforma.id];
+
+            if (!datos.disponible) {
+                datos.precio = "";
+                if (plataforma.id !== "comprada") {
+                    datos.modalidad = "";
+                }
+
+            } else if (datos.modalidad === "suscripcion") {
+                datos.precio = "";
+            }
+        });
+
+        mutacion.mutate(data);
     }
 
     return (
@@ -86,9 +119,21 @@ export default function FormularioPelicula() {
 
                 <Grade register={register} errors={errors} />
 
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Creando..." : "CREAR PELÍCULA"}
+                <button type="submit" disabled={mutacion.isPending}>
+                    {mutacion.isPending ? "Creando..." : "REGISTRAR PELÍCULA"}
                 </button>
+
+                {mutacion.isError && (
+                    <p role="alert" className="error">
+                        {mutacion.error.message}
+                    </p>
+                )}
+
+                {mutacion.isSuccess && (
+                    <p role="status" className="ok">
+                        Película registrada correctamente.
+                    </p>
+                )}
 
             </form>
         </section>

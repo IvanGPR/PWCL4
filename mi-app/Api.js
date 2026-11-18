@@ -1,16 +1,40 @@
+import {
+    esquemaListaPeliculas,
+    esquemaIdentificadores
+} from "../esquemaRegistro/esquemaRespuestaPeliculas";
+
 const BASE = "http://localhost:3001";
+
+
+function validacionPeliculas(json){
+    const resultado = esquemaListaPeliculas.safeParse(json);
+    const identificadores = esquemaIdentificadores.safeParse(json);
+
+    if (!resultado.success) {
+        console.error(resultado.error);
+        throw new Error("La API ha devuelto películas con datos incorrectos");
+    }
+
+    if (!identificadores.success) {
+        console.error(identificadores.error);
+        throw new Error("La API ha devuelto identificadores incorrectos");
+    }
+}
 
 export async function obtenerPeliculas() {
     const r = await fetch(`${BASE}/peliculas`);
     if (!r.ok) throw new Error(`Error HTTP: ${r.status}`);
     const json = await r.json();
+    validacionPeliculas(json)
     return json;
 }
 
 export async function obtenerPelicula(id) {
     const r = await fetch(`${BASE}/peliculas/${id}`);
     if (!r.ok) throw new Error(`Error HTTP: ${r.status}`);
-    return r.json();
+    const json = await r.json();
+    validacionPeliculas(json)
+    return json;
 }
 
 export async function crearPelicula(pelicula) {
@@ -26,7 +50,9 @@ export async function crearPelicula(pelicula) {
         throw new Error(`Error HTTP: ${r.status}`);
     }
 
-    return r.json();
+    const json = await r.json();
+    validacionPeliculas(json)
+    return json;
 }
 
 export async function eliminarPelicula(id) {

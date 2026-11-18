@@ -1,7 +1,7 @@
 import {
     esquemaListaPeliculas,
     esquemaIdentificadores
-} from "../esquemaRegistro/esquemaRespuestaPeliculas";
+} from "./esquemaRegistro/esquemaRespuestaPeliculas";
 
 const BASE = "http://localhost:3001";
 

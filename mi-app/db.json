@@ -1,0 +1,44 @@
+{
+    "peliculas": [
+        {
+            "id": "1",
+            "title": "Interstellar",
+            "genre": "cienciaFiccion",
+            "duration": 169,
+            "releaseDate": "2014-11-07",
+            "streamingService": {
+                "netflix": {
+                    "disponible": true,
+                    "modalidad": "suscripcion",
+                    "precio": ""
+                },
+                "primeVideo": {
+                    "disponible": true,
+                    "modalidad": "pago",
+                    "precio": "4.99"
+                },
+                "disneyPlus": {
+                    "disponible": false,
+                    "modalidad": "",
+                    "precio": ""
+                },
+                "hbo": {
+                    "disponible": false,
+                    "modalidad": "",
+                    "precio": ""
+                },
+                "filmin": {
+                    "disponible": false,
+                    "modalidad": "",
+                    "precio": ""
+                },
+                "comprada": {
+                    "disponible": true,
+                    "precio": "12.99"
+                }
+            },
+            "description": "Un grupo de astronautas viaja por el espacio para encontrar un nuevo hogar para la humanidad.",
+            "grade": 9.5
+        }
+    ]
+}

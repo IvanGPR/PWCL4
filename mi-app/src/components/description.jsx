@@ -7,6 +7,10 @@ export default function Description({ register, errors }) {
             <textarea
                 id="description"
                 {...register("description")}
+                aria-invalid={!!errors.description}
+                aria-describedby={
+                    errors.description ? "error-description" : undefined
+                }
             />
 
             {errors.description && (

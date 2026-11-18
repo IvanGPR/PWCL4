@@ -7,6 +7,10 @@ export default function Genre({ register, errors }) {
             <select
                 id="genre"
                 {...register("genre")}
+                aria-invalid={!!errors.genre}
+                aria-describedby={
+                    errors.genre ? "error-genre" : undefined
+                }
             >
                 <option value="">Seleccionar...</option>
                 <option value="accion">Acción</option>

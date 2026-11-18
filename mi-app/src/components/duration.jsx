@@ -10,6 +10,10 @@ export default function Duration({ register, errors }) {
                 {...register("duration", {
                     valueAsNumber: true
                 })}
+                aria-invalid={!!errors.duration}
+                aria-describedby={
+                    errors.duration ? "error-duration" : undefined
+                }
             />
 
             {errors.duration && (

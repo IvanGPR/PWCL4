@@ -8,6 +8,10 @@ export default function ReleaseDate({ register, errors }) {
                 id="releaseDate"
                 type="date"
                 {...register("releaseDate")}
+                aria-invalid={!!errors.releaseDate}
+                aria-describedby={
+                    errors.releaseDate ? "error-releaseDate" : undefined
+                }
             />
 
             {errors.releaseDate && (

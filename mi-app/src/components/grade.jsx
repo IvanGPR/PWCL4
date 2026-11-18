@@ -11,6 +11,10 @@ export default function Grade({ register, errors }) {
                 {...register("grade", {
                     valueAsNumber: true
                 })}
+                aria-invalid={!!errors.grade}
+                aria-describedby={
+                    errors.grade ? "error-grade" : undefined
+                }
             />
 
             {errors.grade && (

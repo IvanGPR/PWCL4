@@ -6,8 +6,18 @@ export default function StreamingService({
     watch
 }) {
 
+    const errorStreaming =
+    errors.streamingService?.message ||
+    errors.streamingService?.root?.message;
+
     return (
-        <fieldset className="streamingService">
+        <fieldset 
+            className="streamingService"
+            aria-invalid={!!errorStreaming}
+            aria-describedby={
+                errorStreaming ? "error-streamingService" : undefined
+            } 
+        >
 
             <legend>Disponibilidad de la película</legend>
 
@@ -141,12 +151,10 @@ export default function StreamingService({
 
             })}
 
-            {errors.streamingService?.message && (
-
-                <span role="alert">
-                    {errors.streamingService.message}
+            {errorStreaming && (
+                <span id="error-streamingService" role="alert">
+                    {errorStreaming}
                 </span>
-
             )}
 
         </fieldset>

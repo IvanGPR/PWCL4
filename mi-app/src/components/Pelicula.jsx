@@ -1,4 +1,5 @@
 import DisponibilidadPelicula from "./DisponibilidadPelicula";
+import EliminarPelicula from "./EliminarPelicula";
 
 export default function Pelicula({ pelicula }) {
 
@@ -37,6 +38,7 @@ export default function Pelicula({ pelicula }) {
                 streamingService={pelicula.streamingService}
             />
 
+            <EliminarPelicula id={pelicula.id} />
         </article>
     );
 }

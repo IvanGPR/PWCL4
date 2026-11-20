@@ -1,10 +1,13 @@
 import {
     esquemaListaPeliculas,
-    esquemaIdentificadores
+    esquemaIdentificadores,
+    esquemaIdentificador
 } from "./esquemaRegistro/esquemaRespuestaPeliculas";
 
-const BASE = "http://localhost:3001";
+import { esquemaPelicula } from "./esquemaRegistro/esquemaPelicula";
 
+const BASE = import.meta.env.VITE_API_URL;
+console.log("URL de la API:", BASE);
 
 function validacionPeliculas(json){
     const resultado = esquemaListaPeliculas.safeParse(json);
@@ -21,6 +24,21 @@ function validacionPeliculas(json){
     }
 }
 
+function validacionPelicula(json) {
+    const resultado = esquemaPelicula.safeParse(json);
+    const identificador = esquemaIdentificador.safeParse(json);
+
+    if (!resultado.success) {
+        console.error(resultado.error);
+        throw new Error("La API ha devuelto una película con datos incorrectos");
+    }
+
+    if (!identificador.success) {
+        console.error(identificador.error);
+        throw new Error("La API ha devuelto un identificador incorrecto");
+    }
+}
+
 export async function obtenerPeliculas() {
     const r = await fetch(`${BASE}/peliculas`);
     if (!r.ok) throw new Error(`Error HTTP: ${r.status}`);
@@ -33,7 +51,7 @@ export async function obtenerPelicula(id) {
     const r = await fetch(`${BASE}/peliculas/${id}`);
     if (!r.ok) throw new Error(`Error HTTP: ${r.status}`);
     const json = await r.json();
-    validacionPeliculas(json)
+    validacionPelicula(json)
     return json;
 }
 
@@ -51,7 +69,7 @@ export async function crearPelicula(pelicula) {
     }
 
     const json = await r.json();
-    validacionPeliculas(json)
+    validacionPelicula(json)
     return json;
 }
 
